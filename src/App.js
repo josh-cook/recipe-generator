@@ -21,7 +21,10 @@ class App extends PureComponent {
     return (
       <div>
         <h1>Recipe generator</h1>
-        <Recipe />
+        <Recipe
+          ingredients={this.state.ingredients}
+          baseIngredients={this.state.baseIngredients}
+        />
       </div>
     );
   };
