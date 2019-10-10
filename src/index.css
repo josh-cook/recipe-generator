@@ -1,10 +1,44 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  background-color: #f4f4f4;
+
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  font-family: "Satisfy", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#list {
+  text-align: justify;
+  margin-left: 18.5rem;
+  margin-right: auto;
+}
+
+#recipe {
+  text-align: justify;
+  margin-left: 18.5rem;
+  margin-right: auto;
+}
+
+input {
+  width: 20rem;
+  height: 2rem;
+  font-size: 1.5rem;
+}
+
+label {
+  font-family: "Sanchez", serif;
+}
+
+button {
+  font-family: "Sanchez", serif;
+  width: 20rem;
+  height: 4rem;
+  font-size: 2rem;
+  background-color: darkslateblue;
+  color: cornsilk;
 }
 
 code {
