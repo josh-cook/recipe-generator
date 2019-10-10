@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import "./App.css";
 import Recipe from "./Components/Recipe";
 import IngredientsInput from "./Components/IngredientsInput";
+import IngredientsList from "./Components/IngredientsList";
 
 class App extends PureComponent {
   state = {
@@ -15,6 +16,7 @@ class App extends PureComponent {
       this.setState(previousState => {
         return { ingredients: [...previousState.ingredients, ingredientToAdd] };
       });
+      event.target.value = "";
     }
   };
 
@@ -22,10 +24,11 @@ class App extends PureComponent {
     return (
       <div>
         <h1>Recipe generator</h1>
-        <Recipe
+        <IngredientsList ingredients={this.state.ingredients} />
+        {/* <Recipe
           ingredients={this.state.ingredients}
           baseIngredients={this.state.baseIngredients}
-        />
+        /> */}
         <IngredientsInput submit={this.submitIngredient} />
       </div>
     );
