@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import "./App.css";
 import Recipe from "./Components/Recipe";
 import IngredientsInput from "./Components/IngredientsInput";
 import IngredientsList from "./Components/IngredientsList";

@@ -12,15 +12,16 @@ class Recipe extends Component {
   generateRandomRecipe = () => {
     const recipeIngredients = [...this.props.ingredients];
     return (
-      <div>
-        <p>Step1: Wash your hands...</p>
-        <p>Step2: Chop your {this.getRandomIngredient(recipeIngredients)}</p>
-        <p>Step3: Fry your {this.getRandomIngredient(recipeIngredients)} </p>
-        <p>Step4: Garnish with {this.getRandomIngredient(recipeIngredients)}</p>
-        <p>
-          Step5: Serve with a side of{" "}
-          {this.getRandomIngredient(recipeIngredients)}
-        </p>
+      <div id="recipe">
+        <ol type="I">
+          <li>Wash your hands...</li>
+          <li>Chop your {this.getRandomIngredient(recipeIngredients)}</li>
+          <li>Fry your {this.getRandomIngredient(recipeIngredients)} </li>
+          <li>Garnish with {this.getRandomIngredient(recipeIngredients)}</li>
+          <li>
+            Serve with a side of {this.getRandomIngredient(recipeIngredients)}
+          </li>
+        </ol>
       </div>
     );
   };
