@@ -4,9 +4,20 @@ const jsonAdapter = require("axios-jsonp");
 
 class Recipe extends Component {
   render() {
-    if (this.props.recipes.length === 0) this.getRecipeFromIngredients();
+    // if (this.props.recipes.length === 0) {
+    //   return this.getRecipeFromIngredients().then(() => {
+    //     console.log(this.props.recipes);
+    //     // return <p>{this.props.recipes[0].title}</p>;
+    //   });
+    // } else return <p></p>;
 
-    return <p></p>;
+    if (this.props.recipes.length === 0) {
+      this.getRecipeFromIngredients();
+      return <p></p>;
+    } else {
+      console.log(this.props.recipes);
+      return <p></p>;
+    }
   }
 
   getRecipeFromIngredients = () => {
