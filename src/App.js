@@ -26,7 +26,7 @@ class App extends PureComponent {
     ingredients: [],
     recipes: [],
     ingredientsChanged: true,
-    recipeInd: -1
+    recipeInd: null
   };
 
   submitIngredient = event => {
@@ -51,7 +51,6 @@ class App extends PureComponent {
   getRecipeFromIngredients = () => {
     let requestStr = "http://www.recipepuppy.com/api/?i=";
     const recipeIngredients = this.generateIngredientsList();
-    console.log(recipeIngredients);
     recipeIngredients.forEach(ingredient => {
       requestStr += ingredient + ",";
     });
@@ -73,9 +72,15 @@ class App extends PureComponent {
   };
 
   showNewRecipe = () => {
-    if (this.state.ingredientsChanged) this.getRecipeFromIngredients();
+    if (this.state.ingredientsChanged) {
+      this.getRecipeFromIngredients();
+    } else {
+      this.incrementRecipe();
+    }
+  };
 
-    if (this.state.recipeInd === 9) {
+  incrementRecipe = () => {
+    if (this.state.recipeInd === this.state.recipes.length - 1) {
       this.setState(() => {
         return { recipeInd: 0 };
       });
