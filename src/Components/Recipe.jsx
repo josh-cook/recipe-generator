@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { tsMethodSignature } from "@babel/types";
 
 class Recipe extends Component {
   render() {
@@ -13,6 +12,7 @@ class Recipe extends Component {
         <img
           id="recipeImage"
           src={this.props.recipes[this.props.recipeInd].thumbnail}
+          alt="Image missing"
         />
       </div>
     );

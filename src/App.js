@@ -9,9 +9,23 @@ const jsonAdapter = require("axios-jsonp");
 
 class App extends PureComponent {
   state = {
-    baseIngredients: ["olive oil", "salt", "pepper", "onions"],
+    baseIngredients: [
+      "olive oil",
+      "salt",
+      "pepper",
+      "onions",
+      "eggs",
+      "vegetable oil",
+      "bread",
+      "water",
+      "rice",
+      "pasta",
+      "flour",
+      "eggs"
+    ],
     ingredients: [],
     recipes: [],
+    ingredientsChanged: true,
     recipeInd: -1
   };
 
@@ -19,15 +33,25 @@ class App extends PureComponent {
     if (event.key === "Enter") {
       const ingredientToAdd = event.target.value;
       this.setState(previousState => {
-        return { ingredients: [...previousState.ingredients, ingredientToAdd] };
+        return {
+          ingredients: [...previousState.ingredients, ingredientToAdd],
+          ingredientsChanged: true
+        };
       });
       event.target.value = "";
     }
   };
 
+  generateIngredientsList = () => {
+    if (this.state.ingredients.length === 0)
+      return [...this.state.baseIngredients];
+    else return [...this.state.ingredients];
+  };
+
   getRecipeFromIngredients = () => {
     let requestStr = "http://www.recipepuppy.com/api/?i=";
-    const recipeIngredients = [...this.state.ingredients];
+    const recipeIngredients = this.generateIngredientsList();
+    console.log(recipeIngredients);
     recipeIngredients.forEach(ingredient => {
       requestStr += ingredient + ",";
     });
@@ -39,13 +63,18 @@ class App extends PureComponent {
     }).then(res => {
       const listOfRecipes = res.data.results;
       this.setState(() => {
-        return { recipes: listOfRecipes };
+        return {
+          recipes: listOfRecipes,
+          ingredientsChanged: false,
+          recipeInd: 0
+        };
       });
     });
   };
 
   showNewRecipe = () => {
-    this.getRecipeFromIngredients();
+    if (this.state.ingredientsChanged) this.getRecipeFromIngredients();
+
     if (this.state.recipeInd === 9) {
       this.setState(() => {
         return { recipeInd: 0 };
