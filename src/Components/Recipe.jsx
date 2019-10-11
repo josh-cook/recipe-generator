@@ -1,37 +1,54 @@
 import React, { Component } from "react";
+import axios from "axios";
+const jsonAdapter = require("axios-jsonp");
 
 class Recipe extends Component {
-  state = {
-    // ingredients: [...this.props.ingredients]
-  };
-
   render() {
-    return this.generateRandomRecipe();
+    if (this.props.recipes.length === 0) this.getRecipeFromIngredients();
+
+    return <p></p>;
   }
 
-  generateRandomRecipe = () => {
+  getRecipeFromIngredients = () => {
+    let requestStr = "http://www.recipepuppy.com/api/?i=";
     const recipeIngredients = [...this.props.ingredients];
-    return (
-      <div id="recipe">
-        <ol type="I">
-          <li>Wash your hands...</li>
-          <li>Chop your {this.getRandomIngredient(recipeIngredients)}</li>
-          <li>Fry your {this.getRandomIngredient(recipeIngredients)} </li>
-          <li>Garnish with {this.getRandomIngredient(recipeIngredients)}</li>
-          <li>
-            Serve with a side of {this.getRandomIngredient(recipeIngredients)}
-          </li>
-        </ol>
-      </div>
-    );
+    recipeIngredients.forEach(ingredient => {
+      requestStr += ingredient + ",";
+    });
+    requestStr = requestStr.substring(0, requestStr.length - 1);
+
+    axios({
+      url: requestStr,
+      adapter: jsonAdapter
+    }).then(res => {
+      const recipes = res.data.results;
+      this.props.storeRecipes(recipes);
+    });
   };
 
-  getRandomIngredient = recipeIngredients => {
-    const ingredientInd = Math.floor(Math.random() * recipeIngredients.length);
-    const ingredientToReturn = recipeIngredients[ingredientInd];
-    recipeIngredients.splice(ingredientInd, 1);
-    return ingredientToReturn;
-  };
+  //   generateRandomRecipe = () => {
+  //     const recipeIngredients = [...this.props.ingredients];
+  //     return (
+  //       <div id="recipe">
+  //         <ol type="I">
+  //           <li>Wash your hands...</li>
+  //           <li>Chop your {this.getRandomIngredient(recipeIngredients)}</li>
+  //           <li>Fry your {this.getRandomIngredient(recipeIngredients)} </li>
+  //           <li>Garnish with {this.getRandomIngredient(recipeIngredients)}</li>
+  //           <li>
+  //             Serve with a side of {this.getRandomIngredient(recipeIngredients)}
+  //           </li>
+  //         </ol>
+  //       </div>
+  //     );
+  //   };
+
+  //   getRandomIngredient = recipeIngredients => {
+  //     const ingredientInd = Math.floor(Math.random() * recipeIngredients.length);
+  //     const ingredientToReturn = recipeIngredients[ingredientInd];
+  //     recipeIngredients.splice(ingredientInd, 1);
+  //     return ingredientToReturn;
+  //   };
 }
 
 export default Recipe;

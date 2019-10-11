@@ -8,6 +8,7 @@ class App extends PureComponent {
   state = {
     baseIngredients: ["olive oil", "salt", "pepper", "onions"],
     ingredients: [],
+    recipes: [],
     recipesShown: 0
   };
 
@@ -27,6 +28,13 @@ class App extends PureComponent {
     });
   };
 
+  storeRecipes = listOfRecipes => {
+    console.log("Updating recipe list");
+    this.setState(() => {
+      return { recipes: listOfRecipes };
+    });
+  };
+
   render = () => {
     return (
       <div>
@@ -35,7 +43,8 @@ class App extends PureComponent {
         {this.state.recipesShown > 0 && (
           <Recipe
             ingredients={this.state.ingredients}
-            baseIngredients={this.state.baseIngredients}
+            storeRecipes={this.storeRecipes}
+            recipes={this.state.recipes}
           />
         )}
         <IngredientsInput submit={this.submitIngredient} />
