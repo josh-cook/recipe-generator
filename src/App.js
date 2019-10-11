@@ -11,7 +11,8 @@ class App extends PureComponent {
   state = {
     baseIngredients: ["olive oil", "salt", "pepper", "onions"],
     ingredients: [],
-    recipes: []
+    recipes: [],
+    recipeInd: -1
   };
 
   submitIngredient = event => {
@@ -45,9 +46,15 @@ class App extends PureComponent {
 
   showNewRecipe = () => {
     this.getRecipeFromIngredients();
-    this.setState(prevState => {
-      return { recipesShown: prevState.recipesShown + 1 };
-    });
+    if (this.state.recipeInd === 9) {
+      this.setState(() => {
+        return { recipeInd: 0 };
+      });
+    } else {
+      this.setState(prevState => {
+        return { recipeInd: prevState.recipeInd + 1 };
+      });
+    }
   };
 
   render = () => {
@@ -60,6 +67,7 @@ class App extends PureComponent {
             ingredients={this.state.ingredients}
             storeRecipes={this.storeRecipes}
             recipes={this.state.recipes}
+            recipeInd={this.state.recipeInd}
           />
         )}
         <IngredientsInput submit={this.submitIngredient} />
