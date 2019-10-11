@@ -1,15 +1,17 @@
 import React, { PureComponent } from "react";
+import axios from "axios";
 import Recipe from "./Components/Recipe";
 import IngredientsInput from "./Components/IngredientsInput";
 import IngredientsList from "./Components/IngredientsList";
 import RecipeButton from "./Components/RecipeButton";
 
+const jsonAdapter = require("axios-jsonp");
+
 class App extends PureComponent {
   state = {
     baseIngredients: ["olive oil", "salt", "pepper", "onions"],
     ingredients: [],
-    recipes: [],
-    recipesShown: 0
+    recipes: []
   };
 
   submitIngredient = event => {
@@ -22,16 +24,29 @@ class App extends PureComponent {
     }
   };
 
-  showNewRecipe = () => {
-    this.setState(prevState => {
-      return { recipesShown: prevState.recipesShown + 1 };
+  getRecipeFromIngredients = () => {
+    let requestStr = "http://www.recipepuppy.com/api/?i=";
+    const recipeIngredients = [...this.state.ingredients];
+    recipeIngredients.forEach(ingredient => {
+      requestStr += ingredient + ",";
+    });
+    requestStr = requestStr.substring(0, requestStr.length - 1);
+
+    axios({
+      url: requestStr,
+      adapter: jsonAdapter
+    }).then(res => {
+      const listOfRecipes = res.data.results;
+      this.setState(() => {
+        return { recipes: listOfRecipes };
+      });
     });
   };
 
-  storeRecipes = listOfRecipes => {
-    console.log("Updating recipe list");
-    this.setState(() => {
-      return { recipes: listOfRecipes };
+  showNewRecipe = () => {
+    this.getRecipeFromIngredients();
+    this.setState(prevState => {
+      return { recipesShown: prevState.recipesShown + 1 };
     });
   };
 
@@ -40,7 +55,7 @@ class App extends PureComponent {
       <div>
         <h1>Recipe generator</h1>
         <IngredientsList ingredients={this.state.ingredients} />
-        {this.state.recipesShown > 0 && (
+        {this.state.recipes.length > 0 && (
           <Recipe
             ingredients={this.state.ingredients}
             storeRecipes={this.storeRecipes}
