@@ -11,15 +11,20 @@ body {
 }
 
 #list {
+  display: inline-block;
   text-align: justify;
-  margin-left: 18.5rem;
-  margin-right: auto;
 }
 
-#recipe {
-  text-align: justify;
-  margin-left: 18.5rem;
-  margin-right: auto;
+#recipeTitle {
+  display: block;
+}
+
+#recipeImage {
+  display: inline-block;
+  width: 50%;
+  height: 50%;
+  image-rendering: crisp-edges;
+  image-resolution: auto;
 }
 
 input {
